@@ -1,0 +1,165 @@
+@keyframes animacao1 {
+  0% {
+    background: #D62623;
+  }
+  50% {
+    background: #EE3430;
+  }
+  100% {
+    background: #FB3733;
+  }
+}
+body {
+  background-color: #152733;
+}
+
+.gameover-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.gameover-body #tudo {
+  width: 80vw;
+  height: 90vh;
+  margin-top: 20px;
+  border-radius: 40px;
+  -webkit-animation-name: animacao1;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+  -moz-animation-name: animacao1;
+  -moz-animation-duration: 1s;
+  -moz-animation-timing-function: linear;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-direction: alternate;
+  animation-name: animacao1;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+.gameover-body .gameover {
+  width: 750px;
+  height: auto;
+  padding-top: 30px;
+  background: none;
+}
+.gameover-body .gameover p {
+  margin-top: 3px;
+  margin-bottom: 3px;
+  font-size: 160px;
+  font-family: "Black Ops One", cursive;
+  line-height: 120px;
+  text-align: center;
+  text-shadow: 5px 5px #000000;
+  color: #ffffff;
+}
+.gameover-body .continue {
+  width: 750px;
+  height: auto;
+  padding-top: 20px;
+}
+.gameover-body .continue p {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  text-align: center;
+  font-size: 40px;
+  font-weight: bold;
+  font-family: corbel;
+  color: #ffffff;
+  text-shadow: 2.5px 2.5px #000000;
+}
+.gameover-body .opcoes {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+.gameover-body .yes {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: corbel;
+  color: #ffffff;
+  text-decoration: none;
+  text-shadow: 2.5px 2.5px #000000;
+  padding: 25px 60px 25px 60px;
+  border: 1px solid #000000;
+  border-radius: 20px;
+  background: #006400;
+  margin: 0 30px;
+  float: left;
+}
+.gameover-body .yes:hover {
+  -webkit-animation-name: animacao2;
+  -webkit-animation-duration: 0.2s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+  -moz-animation-name: animacao2;
+  -moz-animation-duration: 0.2s;
+  -moz-animation-timing-function: linear;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-direction: alternate;
+  animation-name: animacao2;
+  animation-duration: 0.2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+.gameover-body .no {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: corbel;
+  color: #ffffff;
+  text-decoration: none;
+  text-shadow: 1.5px 1.5px #FB3733;
+  padding: 25px 60px 25px 60px;
+  border-radius: 20px;
+  background: #000000;
+  margin: 0 30px;
+  float: left;
+}
+.gameover-body .no:hover {
+  -webkit-animation-name: animacao3;
+  -webkit-animation-duration: 0.15s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+  -moz-animation-name: animacao3;
+  -moz-animation-duration: 0.15s;
+  -moz-animation-timing-function: linear;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-direction: alternate;
+  animation-name: animacao3;
+  animation-duration: 0.15s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+@keyframes animacao2 {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.1);
+  }
+}
+@keyframes animacao3 {
+  0% {
+    transform: translate(-5px, 0px);
+  }
+  25% {
+    transform: translate(-2.5px, 0px);
+  }
+  50% {
+    transform: translate(0px, 0px);
+  }
+  75% {
+    transform: translate(2.5px, 0px);
+  }
+  100% {
+    transform: translate(5px, 0px);
+  }
+}/*# sourceMappingURL=gameover.css.map */

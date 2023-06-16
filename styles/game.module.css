@@ -1,0 +1,671 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  font-family: "Rozha One", serif;
+}
+
+:root {
+  --card-border-color:wheat;
+  font-size: calc(5px + 0.390625vw);
+  --card-width:7rem;
+  --card-height:10rem;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+}
+body .model-menu {
+  display: flex;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../img/uno_menu.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transform-style: preserve-3d;
+}
+body .model-menu .model-content {
+  display: flex;
+  position: absolute;
+  width: 90%;
+  height: 80%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  flex-direction: column;
+  border: 0.8rem solid rgb(199, 172, 22);
+  border-radius: 2.5rem;
+  background-color: peru;
+  box-shadow: 0.3rem 0.3rem 0.3rem;
+  justify-content: center;
+  align-items: center;
+  font-size: xx-large;
+  font-weight: 900;
+}
+body .model-menu .model-content .back-btn {
+  display: flex;
+  cursor: pointer;
+  font-size: large;
+  font-weight: 500;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  width: 20rem;
+  height: 5rem;
+  bottom: 5%;
+  transform: translateX(-50%);
+  left: 50%;
+  border: 0.2rem solid;
+  border-radius: 25%;
+  background-color: aqua;
+}
+body .model-menu .model-content-menu {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+body .model-menu .model-content-menu .bar-btn {
+  cursor: pointer;
+  display: flex;
+  position: relative;
+  top: 80%;
+  margin: 0 20px;
+  justify-content: center;
+  font-size: 300%;
+  align-items: center;
+  border-radius: 3rem;
+  border: 0.3rem solid;
+  transition: All 0.5s;
+  width: 20rem;
+  height: 5rem;
+  background-color: green;
+}
+body .model-menu .model-content-menu .bar-btn:hover {
+  animation: highlighted 1s ease-in-out alternate infinite;
+}
+body .model-setting {
+  display: flex;
+  position: fixed;
+  z-index: 30;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+body .model-setting .model-content-setting {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 3rem;
+  border: 0.8rem solid gold;
+  border-radius: 25px;
+  min-width: 50%;
+  background-color: peru;
+  box-shadow: 0.3rem 0.3rem 0.3rem;
+}
+body .model-setting .model-content-setting .menu-bar {
+  cursor: pointer;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  min-width: 10rem;
+  margin: 1.5rem;
+  padding: 1rem;
+  font-size: 2.8rem;
+  font-weight: bold;
+  border: 0.2rem solid;
+  border-radius: 1.5rem;
+  box-shadow: 0.4rem 0.4rem 0.1rem 0rem;
+  background-color: rgb(113, 61, 9);
+}
+body .model-setting .model-content-setting .menu-bar:hover {
+  transform: translateX(0.4rem) translateY(0.4rem);
+  box-shadow: 0 0 0 0;
+}
+body .model-setting .model-content {
+  display: flex;
+  position: relative;
+  width: 90%;
+  height: 90%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  flex-direction: column;
+  border: 0.8rem solid rgb(199, 172, 22);
+  border-radius: 2.5rem;
+  background-color: peru;
+  box-shadow: 0.3rem 0.3rem 0.3rem;
+  font-weight: 900;
+}
+body .model-setting .model-content .btn-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  top: 85%;
+}
+body .model-setting .model-content .btn-container .btn {
+  display: flex;
+  cursor: pointer;
+  font-size: large;
+  font-weight: 900;
+  margin: 0 20px;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 15rem;
+  height: 5rem;
+  border: 0.3rem solid;
+  border-radius: 25%;
+  background-color: aqua;
+  box-shadow: 0.5rem 0.5rem 0.3rem black;
+}
+body .model-setting .model-content .btn-container .btn:hover {
+  cursor: pointer;
+}
+body .game-board {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  position: absolute;
+  grid-template: repeat(3, 1fr)/repeat(3, 1fr);
+  grid: "box1 box2 box3" auto "box4 box5 box6" 1fr "box7 box8 box9" auto;
+  background-image: url("../img/card_table.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 10;
+  perspective: 100rem;
+}
+body .game-board .deck {
+  position: relative;
+  display: flex;
+  width: 33vw;
+  height: 33vh;
+  justify-content: center;
+  align-items: center;
+}
+body .game-board .deck .selectColor {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  width: 10rem;
+  height: 10rem;
+  display: grid;
+  grid-template: repeat(2, 1fr)/repeat(2, 1fr);
+  z-index: 15;
+}
+body .game-board .deck .selectColor .color {
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  border: 0.2rem solid wheat;
+  opacity: 0.9;
+  transition: transform 0.5s;
+}
+body .game-board .deck .selectColor .color:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 0.5rem 0.5rem gold;
+  z-index: 20;
+}
+body .game-board .deck .action {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  display: flex;
+  position: absolute;
+  z-index: 15;
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  box-shadow: 0 0 0.1rem 0.1rem gold;
+  background-color: gold;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: action-shown 1s;
+}
+body .game-board .deck .penalty {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  display: flex;
+  position: absolute;
+  z-index: 15;
+  width: 7rem;
+  height: 7rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: apply-action-shown 1s;
+}
+body .game-board .deck .play-keep-btn {
+  top: 50%;
+  left: 50%;
+  transform: translate(calc(-50% + var(--card-width) / 2), calc(-var(--card-height)));
+  display: flex;
+  position: absolute;
+  z-index: 15;
+  width: 7rem;
+  height: 10rem;
+}
+body .game-board .deck .play-keep-btn .card-back {
+  transform: rotateY(180deg);
+}
+body .game-board .deck .play-keep-btn .play-btn {
+  cursor: pointer;
+  display: flex;
+  right: 100%;
+  position: absolute;
+  top: calc(50% - 2rem);
+  width: 12rem;
+  height: 4rem;
+  font-size: larger;
+  font-weight: 700;
+  font-family: Arial, Helvetica, sans-serif;
+  justify-content: center;
+  align-items: center;
+  border-radius: 60% 0 0 60%;
+  background-image: linear-gradient(-90deg, rgb(151, 200, 17), 70%, rgba(187, 255, 0, 0));
+  background-size: cover;
+  transition: all 0.5s;
+  z-index: 20;
+}
+body .game-board .deck .play-keep-btn .play-btn:hover {
+  transform: scale(1.5);
+  border: 2px solid;
+  border-radius: 50%;
+  background-color: rgb(151, 200, 17);
+  z-index: 25;
+}
+body .game-board .deck .play-keep-btn .keep-btn {
+  cursor: pointer;
+  display: flex;
+  left: 100%;
+  top: calc(50% - 2rem);
+  position: absolute;
+  width: 12rem;
+  height: 4rem;
+  font-size: larger;
+  font-weight: 700;
+  font-family: Arial, Helvetica, sans-serif;
+  background-image: linear-gradient(90deg, rgb(15, 149, 66), 70%, rgba(0, 255, 98, 0));
+  background-size: cover;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s;
+  border-radius: 0 60% 60% 0;
+  z-index: 20;
+}
+body .game-board .deck .play-keep-btn .keep-btn:hover {
+  transform: scale(1.5);
+  border: 2px solid;
+  border-radius: 50%;
+  background-color: rgb(15, 149, 66);
+  z-index: 25;
+}
+body .game-board .deck .player-left {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: -3rem;
+  right: 10rem;
+  justify-content: center;
+}
+body .game-board .deck .player-left .card {
+  transform: rotate(90deg);
+}
+body .game-board .deck .player-left .card .card-front {
+  transform: rotateY(180deg);
+}
+body .game-board .deck .player-right {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 10rem;
+  justify-content: center;
+}
+body .game-board .deck .player-right .card {
+  transform: rotate(-90deg);
+}
+body .game-board .deck .player-right .card .card-front {
+  transform: rotateY(180deg);
+}
+body .game-board .deck .player-top {
+  display: flex;
+  position: absolute;
+  top: 1rem;
+  justify-content: center;
+}
+body .game-board .deck .player-top .card .card-front {
+  transform: rotateY(180deg);
+}
+body .game-board .deck .player-bot {
+  display: flex;
+  position: absolute;
+  top: 0;
+  justify-content: center;
+}
+body .game-board .deck .player-bot .card {
+  cursor: pointer;
+  transition: all 0.5s;
+}
+body .game-board .deck .player-bot .card:hover {
+  transform: translateY(-4rem);
+}
+body .game-board .deck .player-bot .card .card-back {
+  transform: rotateY(180deg);
+}
+body .game-board .deck .player-bot .card .card-highlighted:hover {
+  animation: highlighted 1s ease-in-out alternate infinite;
+}
+body .game-board .deck .discard-pile {
+  width: 33vw;
+  height: 33vh;
+  display: flex;
+  position: relative;
+  top: -5rem;
+  justify-content: center;
+  align-items: center;
+}
+body .game-board .deck .discard-pile .card-style {
+  position: relative;
+}
+body .game-board .deck .discard-pile .card-style .card {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+}
+body .game-board .deck .discard-pile .card-style .card .card-back {
+  transform: rotateY(180deg);
+}
+body .game-board .deck .clockwise {
+  left: calc(50% - 15rem);
+  top: calc(-4rem + 50% - 15rem);
+  position: absolute;
+  display: flex;
+  opacity: 20%;
+  z-index: -30;
+  width: 30rem;
+  height: 30rem;
+  justify-content: center;
+  align-items: center;
+  background-image: url("../img/symbols/Clockwise_arrow.svg");
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  animation: clockwise-arrow 20s linear infinite;
+}
+body .game-board .deck .counter-clockwise {
+  left: calc(50% - 15rem);
+  top: calc(-4rem + 50% - 15rem);
+  position: absolute;
+  display: flex;
+  opacity: 20%;
+  z-index: -30;
+  width: 30rem;
+  height: 30rem;
+  justify-content: center;
+  align-items: center;
+  background-image: url("../img/symbols/Clockwise_arrow.svg");
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  animation: counter-clockwise-arrow 20s linear infinite;
+}
+body .game-board .deck .main-deck {
+  display: flex;
+  position: absolute;
+  transform: rotateX(60deg) rotateZ(-45deg);
+  transform-style: preserve-3d;
+}
+body .game-board .deck .main-deck div.top-card {
+  z-index: 1;
+  cursor: pointer;
+  transition: transform 0.5s;
+}
+body .game-board .deck .main-deck div.top-card:hover {
+  transform: translate(1rem, 3rem);
+}
+body .game-board .deck .p1 {
+  position: absolute;
+  top: 0;
+  left: -3rem;
+  display: flex;
+  align-items: center;
+}
+body .game-board .deck .p2 {
+  position: absolute;
+  top: -3rem;
+  left: 10rem;
+  display: flex;
+  align-items: center;
+}
+body .game-board .deck .p3 {
+  position: absolute;
+  top: 1rem;
+  left: -3rem;
+  display: flex;
+  align-items: center;
+}
+body .game-board .deck .p4 {
+  position: absolute;
+  bottom: 0;
+  right: 10rem;
+  display: flex;
+  align-items: center;
+}
+body .game-board .deck .highlighted {
+  box-shadow: 0 0 1.5rem 1rem rgb(244, 252, 88);
+}
+body .game-board .deck .profile {
+  font-size: large;
+  font-weight: bold;
+  font-family: "Times New Roman", Times, serif;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  width: 7rem;
+  height: 9rem;
+  position: absolute;
+  opacity: 0.8;
+  background-image: linear-gradient(45deg, blue, red);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 45%;
+  border: 0.5rem double gold;
+  box-sizing: content-box;
+  z-index: 30;
+}
+body .game-board .deck .profile img {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body .game-board .deck .profile img:nth-child(1) {
+  width: 7rem;
+  margin: 1rem 0;
+  text-align: center;
+}
+body .game-board .deck .profile img:nth-child(2) {
+  display: flex;
+  justify-content: center;
+  margin: 0 1rem 1rem 1rem;
+  width: 5rem;
+  height: 5rem;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+body .game-board .setting {
+  cursor: pointer;
+  position: absolute;
+  width: 3rem;
+  height: 3rem;
+  top: 2rem;
+  right: 3rem;
+  background-color: gray;
+  background-image: url("../img/setting_icon.png");
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  border: 0.3rem solid brown;
+}
+body .game-board .setting:hover {
+  animation: rotate-360 5s linear infinite;
+}
+body .game-board .warning {
+  display: flex;
+  position: absolute;
+  top: 6rem;
+  right: 0;
+  background-color: rgba(188, 142, 68, 0.604);
+  font-weight: 900;
+  width: 100px;
+  height: 30px;
+  border: 2px solid burlywood;
+  border-radius: 15% 15%;
+  padding: 2px;
+  justify-content: center;
+  align-items: center;
+}
+body .game-board .music {
+  cursor: pointer;
+  position: absolute;
+  width: 3rem;
+  height: 3rem;
+  top: 2rem;
+  right: 7rem;
+  background-color: gray;
+  background-image: url("../img/music_icon.png");
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  border: 0.3rem solid brown;
+}
+body .game-board .music:hover {
+  animation: shake 0.8s linear infinite;
+}
+body .game-board .card-front {
+  position: absolute;
+  width: var(--card-width);
+  height: var(--card-height);
+  backface-visibility: hidden;
+  background-image: url("../img/cards/UNO_cards_deck.svg");
+  /* background-size: 1400% 900%; original 14x8*/
+  /* move each card x+7.586% y+14% */
+  background-size: 1700% 930%;
+  /* origin=(0.68%,1%) last(99.298%,99%) */
+  background-position: 0.68% 1%;
+  background-repeat: no-repeat;
+  border: 0.3rem #555555 solid;
+  border-color: var(--card-border-color);
+  border-radius: 0.5rem;
+  box-shadow: 0.2rem 0.2rem 0.3rem 0rem #000000;
+}
+body .game-board .card-back {
+  position: absolute;
+  width: var(--card-width);
+  height: var(--card-height);
+  backface-visibility: hidden;
+  background-color: black;
+  background-image: url("../img/UNO_Logo.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 0.3rem #555555 solid;
+  border-color: var(--card-border-color);
+  border-radius: 0.5rem;
+  box-shadow: 0.2rem 0.2rem 0.3rem 0rem #000000;
+}
+
+@keyframes clockwise-arrow {
+  from {
+    transform: rotate(0deg) scale(1.5);
+  }
+  to {
+    transform: rotate(360deg) scale(1.5);
+  }
+}
+@keyframes counter-clockwise-arrow {
+  from {
+    transform: scaleX(-1) rotate(0deg) scale(1.5);
+  }
+  to {
+    transform: scaleX(-1) rotate(360deg) scale(1.5);
+  }
+}
+@keyframes rotate-360 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes shake {
+  0% {
+    transform: translate(0.2rem, 0.1rem) rotate(0deg);
+  }
+  20% {
+    transform: translate(-0.3rem, 0rem) rotate(3deg);
+  }
+  40% {
+    transform: translate(0.1rem, -0.1rem) rotate(1deg);
+  }
+  60% {
+    transform: translate(-0.3rem, 0.1rem) rotate(0deg);
+  }
+  80% {
+    transform: translate(-0.1rem, -0.1rem) rotate(4deg);
+  }
+  100% {
+    transform: translate(0.1rem, -0.2rem) rotate(-1deg);
+  }
+}
+@keyframes highlighted {
+  to {
+    box-shadow: 0 0 1.5rem 1rem rgb(244, 252, 88);
+  }
+}
+@keyframes action-shown {
+  to {
+    opacity: 100%;
+    width: 15rem;
+    height: 15rem;
+    box-shadow: 0 0 2rem 2rem gold;
+  }
+}
+@keyframes apply-action-shown {
+  from {
+    transform: translateY(-5rem);
+  }
+  to {
+    opacity: 100%;
+  }
+}
+@keyframes glow {
+  to {
+    box-shadow: 0 0 5rem 5rem rgb(244, 252, 88);
+  }
+}/*# sourceMappingURL=game.module.css.map */

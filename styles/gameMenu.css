@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  text-decoration: none !important;
+  color: black !important;
+}
+
+main {
+  display: flex;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../public/img/uno_menu.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transform-style: preserve-3d;
+}/*# sourceMappingURL=gameMenu.css.map */

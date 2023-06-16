@@ -1,0 +1,139 @@
+@import url("https://fonts.googleapis.com/css?family=K2D");
+.menu-body {
+  min-height: 100vh;
+  background: linear-gradient(280deg, #ff3cac 0%, #784ba0 50%, #2b86c5 100%);
+  font-family: "K2D", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu_toggler {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 999;
+  height: 28px;
+  width: 28px;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.menu_toggler span,
+.menu_toggler span::before,
+.menu_toggler span::after {
+  position: absolute;
+  content: "";
+  width: 28px;
+  height: 2.5px;
+  background: #fafafa;
+  border-radius: 20px;
+  transition: 500ms cubic-bezier(0.77, 0, 0.175, 1);
+}
+.menu_toggler span::before {
+  top: -8px;
+}
+.menu_toggler span::after {
+  top: 8px;
+}
+.menu_toggler.active > span {
+  background: transparent;
+}
+.menu_toggler.active > span::before, .menu_toggler.active > span::after {
+  background: #005c9c;
+  top: 0px;
+}
+.menu_toggler.active > span::before {
+  transform: rotate(-225deg);
+}
+.menu_toggler.active > span::after {
+  transform: rotate(225deg);
+}
+
+/*
+ * SLIDING MENU PANEL
+ */
+.menu {
+  position: absolute;
+  top: 0;
+  left: -30%;
+  z-index: 998;
+  color: #005c9c;
+  background: rgba(250, 250, 250, 0.7);
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+          clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+  width: 30%;
+  height: 100%;
+  padding: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: 300ms left cubic-bezier(0.77, 0, 0.175, 1);
+}
+@media only screen and (max-width: 600px) {
+  .menu {
+    width: 250px;
+    left: -250px;
+    padding: 50px;
+  }
+}
+.menu.active {
+  left: 0;
+}
+.menu p {
+  text-decoration: underline;
+  margin: 2rem 0 2rem -6rem;
+  font-style: italic;
+  font-weight: 900;
+  font-size: 5rem;
+  z-index: 5;
+}
+
+/*
+ * BASIC STYLES
+ */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.s-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  justify-content: center;
+  align-items: center;
+}
+.s-container h1 {
+  font-size: 80px;
+  line-height: 160px;
+  color: #fafafa;
+  mix-blend-mode: overlay;
+}
+.s-container p {
+  margin: 2px 5px;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: black;
+  font-family: Arial, sans-serif;
+  margin-top: 20px;
+}
+
+.github {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}/*# sourceMappingURL=menu.css.map */

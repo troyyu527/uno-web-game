@@ -3,7 +3,6 @@
   padding: 0;
   box-sizing: border-box;
   user-select: none;
-  font-family: 'Rozha One', serif;
 }
 
 :root{
@@ -16,7 +15,7 @@
 }
 
 
-body {
+.game-body {
   width: 100vw;
   height: 100vh;
   
@@ -169,12 +168,13 @@ body {
         display:flex;
         justify-content: center;
         position: relative;
-        top:85%;
+        bottom:0rem;
         .btn{
           display: flex;
           cursor: pointer;
           font-size: large;
           font-weight: 900;
+          color: #000000;
           margin: 0 20px;
           position: relative;
           justify-content: center;
@@ -384,7 +384,7 @@ body {
       .player-top{
         display: flex;
         position: absolute;
-        top:1rem;
+        bottom:18rem;
         
         justify-content: center;
         .card{
@@ -522,7 +522,7 @@ body {
       .p2{
         position: absolute;
         top:-3rem;
-        left:10rem;
+        right:25rem;
         display: flex;
         align-items: center;
         //right:20rem;
@@ -533,7 +533,7 @@ body {
         //top:1rem;
         //right:-10rem;
         position: absolute;
-        top:1rem;
+        bottom:8rem;
         left:-3rem;
         display: flex;
         align-items: center;
@@ -544,7 +544,7 @@ body {
         //bottom:-5rem;
         position: absolute;
         bottom:0;
-        right:10rem;
+        left:25rem;
         display: flex;
         align-items: center;
         
@@ -647,6 +647,7 @@ body {
       &:hover{
         animation: shake 0.8s linear infinite
       } 
+      
     }
     .card-front{
       position: absolute;
@@ -693,6 +694,14 @@ body {
 
   
  
+}
+input[type=range] {
+  //-webkit-appearance: none;
+  position: absolute;
+  right:4rem;
+  top:6rem;
+  margin: 0px 0;
+  width: 50px;
 }
 
 

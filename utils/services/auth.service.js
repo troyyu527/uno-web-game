@@ -46,14 +46,17 @@ class AuthService{
     return axios.get(API_URL + "/gameData" + "/" + user)
   }
   saveGameData(data){
-    const {user,index,name,date,img,currentPlayer,currentPlayerQueue,isReverse,main,discard,p1,p2,p3,p4}=data
+    const {user,index,name,date,currentPlayer,currentPlayerQueue,isReverse,main,discard,p1,p2,p3,p4}=data
     return axios.post(API_URL+"/gameData"+"/data",{
       //post req.body
-      user,index,name,date,img,currentPlayer,currentPlayerQueue,isReverse,main,discard,p1,p2,p3,p4
+      user,index,name,date,currentPlayer,currentPlayerQueue,isReverse,main,discard,p1,p2,p3,p4
     })
   }
   deleteGameData(user,index){
     return axios.delete(API_URL+"/gameData"+"/"+user+"/"+index)
+  }
+  deleteGameDataAll(user){
+    return axios.delete(API_URL+"/gameData"+"/"+user)
   }
 }
 

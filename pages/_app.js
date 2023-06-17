@@ -1,6 +1,8 @@
 import Head from 'next/head';
 import "@styles/menu.css";
+import "@styles/menuPage.css";
 import "@styles/game.css";
+import "@styles/gameover.css";
 
 
 function MyApp({ Component, pageProps }) {

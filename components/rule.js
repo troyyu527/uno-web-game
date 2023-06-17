@@ -114,7 +114,10 @@ function Rule(props){
               <p>The first player to get rid of their last card ("going out") wins.</p>
             </div>
           </div>
-          <div className="back-btn" onClick={toggleRule}>Back</div>
+          <div className='btn-container'>
+            <div className="btn" onClick={toggleRule}>Back</div>
+          </div>
+          
         </div>
   )
 }

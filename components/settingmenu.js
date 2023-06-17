@@ -18,20 +18,8 @@ function SettingMenu(props) {
   }
 
   function openDataPage(title){
-    
     setDataTitle(title)
-    if (title === 'Save') {
-      
-      AuthService.getGameData(user)
-      .then(res=>{
-        setGameData(res.data)
-        setShowData(!showData)
-      })
-    }else{
-      loadGame()
-    }
-    
-
+    setShowData(true)
   }
   
   return (
@@ -56,15 +44,14 @@ function SettingMenu(props) {
         </div>
       )}
 
-      {showRule && (
+      {showRule && !showData &&(
         <Rule toggleRule={toggleRule}/>
       )}
-      {showData && (
+      {showData && !showRule &&(
         <DataPage 
         title={dataTitle} 
         loadData={loadData}
         dirToGame={dirToGame}
-        showData={showData}
         setShowData={setShowData}
         getCurrentData={getCurrentData}
         gameData={gameData}

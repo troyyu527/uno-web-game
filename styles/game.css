@@ -5,7 +5,6 @@
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
-  font-family: "Rozha One", serif;
 }
 
 :root {
@@ -15,11 +14,11 @@
   --card-height:10rem;
 }
 
-body {
+.game-body {
   width: 100vw;
   height: 100vh;
 }
-body .model-menu {
+.game-body .model-menu {
   display: flex;
   position: absolute;
   width: 100vw;
@@ -30,7 +29,7 @@ body .model-menu {
   background-repeat: no-repeat;
   transform-style: preserve-3d;
 }
-body .model-menu .model-content {
+.game-body .model-menu .model-content {
   display: flex;
   position: absolute;
   width: 90%;
@@ -48,7 +47,7 @@ body .model-menu .model-content {
   font-size: xx-large;
   font-weight: 900;
 }
-body .model-menu .model-content .back-btn {
+.game-body .model-menu .model-content .back-btn {
   display: flex;
   cursor: pointer;
   font-size: large;
@@ -65,14 +64,14 @@ body .model-menu .model-content .back-btn {
   border-radius: 25%;
   background-color: aqua;
 }
-body .model-menu .model-content-menu {
+.game-body .model-menu .model-content-menu {
   width: 100vw;
   height: 100vh;
   position: relative;
   display: flex;
   justify-content: center;
 }
-body .model-menu .model-content-menu .bar-btn {
+.game-body .model-menu .model-content-menu .bar-btn {
   cursor: pointer;
   display: flex;
   position: relative;
@@ -88,10 +87,10 @@ body .model-menu .model-content-menu .bar-btn {
   height: 5rem;
   background-color: green;
 }
-body .model-menu .model-content-menu .bar-btn:hover {
+.game-body .model-menu .model-content-menu .bar-btn:hover {
   animation: highlighted 1s ease-in-out alternate infinite;
 }
-body .model-setting {
+.game-body .model-setting {
   display: flex;
   position: fixed;
   z-index: 30;
@@ -102,7 +101,7 @@ body .model-setting {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.8);
 }
-body .model-setting .model-content-setting {
+.game-body .model-setting .model-content-setting {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -115,7 +114,7 @@ body .model-setting .model-content-setting {
   background-color: peru;
   box-shadow: 0.3rem 0.3rem 0.3rem;
 }
-body .model-setting .model-content-setting .menu-bar {
+.game-body .model-setting .model-content-setting .menu-bar {
   cursor: pointer;
   display: flex;
   position: relative;
@@ -130,11 +129,11 @@ body .model-setting .model-content-setting .menu-bar {
   box-shadow: 0.4rem 0.4rem 0.1rem 0rem;
   background-color: rgb(113, 61, 9);
 }
-body .model-setting .model-content-setting .menu-bar:hover {
+.game-body .model-setting .model-content-setting .menu-bar:hover {
   transform: translateX(0.4rem) translateY(0.4rem);
   box-shadow: 0 0 0 0;
 }
-body .model-setting .model-content {
+.game-body .model-setting .model-content {
   display: flex;
   position: relative;
   width: 90%;
@@ -149,17 +148,18 @@ body .model-setting .model-content {
   box-shadow: 0.3rem 0.3rem 0.3rem;
   font-weight: 900;
 }
-body .model-setting .model-content .btn-container {
+.game-body .model-setting .model-content .btn-container {
   display: flex;
   justify-content: center;
   position: relative;
-  top: 85%;
+  bottom: 0rem;
 }
-body .model-setting .model-content .btn-container .btn {
+.game-body .model-setting .model-content .btn-container .btn {
   display: flex;
   cursor: pointer;
   font-size: large;
   font-weight: 900;
+  color: #000000;
   margin: 0 20px;
   position: relative;
   justify-content: center;
@@ -171,10 +171,10 @@ body .model-setting .model-content .btn-container .btn {
   background-color: aqua;
   box-shadow: 0.5rem 0.5rem 0.3rem black;
 }
-body .model-setting .model-content .btn-container .btn:hover {
+.game-body .model-setting .model-content .btn-container .btn:hover {
   cursor: pointer;
 }
-body .game-board {
+.game-body .game-board {
   width: 100vw;
   height: 100vh;
   display: grid;
@@ -188,7 +188,7 @@ body .game-board {
   z-index: 10;
   perspective: 100rem;
 }
-body .game-board .deck {
+.game-body .game-board .deck {
   position: relative;
   display: flex;
   width: 33vw;
@@ -196,7 +196,7 @@ body .game-board .deck {
   justify-content: center;
   align-items: center;
 }
-body .game-board .deck .selectColor {
+.game-body .game-board .deck .selectColor {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -207,7 +207,7 @@ body .game-board .deck .selectColor {
   grid-template: repeat(2, 1fr)/repeat(2, 1fr);
   z-index: 15;
 }
-body .game-board .deck .selectColor .color {
+.game-body .game-board .deck .selectColor .color {
   justify-content: center;
   cursor: pointer;
   position: relative;
@@ -219,12 +219,12 @@ body .game-board .deck .selectColor .color {
   opacity: 0.9;
   transition: transform 0.5s;
 }
-body .game-board .deck .selectColor .color:hover {
+.game-body .game-board .deck .selectColor .color:hover {
   transform: scale(1.2);
   box-shadow: 0 0 0.5rem 0.5rem gold;
   z-index: 20;
 }
-body .game-board .deck .action {
+.game-body .game-board .deck .action {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -241,7 +241,7 @@ body .game-board .deck .action {
   background-repeat: no-repeat;
   animation: action-shown 1s;
 }
-body .game-board .deck .penalty {
+.game-body .game-board .deck .penalty {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -255,7 +255,7 @@ body .game-board .deck .penalty {
   background-repeat: no-repeat;
   animation: apply-action-shown 1s;
 }
-body .game-board .deck .play-keep-btn {
+.game-body .game-board .deck .play-keep-btn {
   top: 50%;
   left: 50%;
   transform: translate(calc(-50% + var(--card-width) / 2), calc(-var(--card-height)));
@@ -265,10 +265,10 @@ body .game-board .deck .play-keep-btn {
   width: 7rem;
   height: 10rem;
 }
-body .game-board .deck .play-keep-btn .card-back {
+.game-body .game-board .deck .play-keep-btn .card-back {
   transform: rotateY(180deg);
 }
-body .game-board .deck .play-keep-btn .play-btn {
+.game-body .game-board .deck .play-keep-btn .play-btn {
   cursor: pointer;
   display: flex;
   right: 100%;
@@ -287,14 +287,14 @@ body .game-board .deck .play-keep-btn .play-btn {
   transition: all 0.5s;
   z-index: 20;
 }
-body .game-board .deck .play-keep-btn .play-btn:hover {
+.game-body .game-board .deck .play-keep-btn .play-btn:hover {
   transform: scale(1.5);
   border: 2px solid;
   border-radius: 50%;
   background-color: rgb(151, 200, 17);
   z-index: 25;
 }
-body .game-board .deck .play-keep-btn .keep-btn {
+.game-body .game-board .deck .play-keep-btn .keep-btn {
   cursor: pointer;
   display: flex;
   left: 100%;
@@ -313,14 +313,14 @@ body .game-board .deck .play-keep-btn .keep-btn {
   border-radius: 0 60% 60% 0;
   z-index: 20;
 }
-body .game-board .deck .play-keep-btn .keep-btn:hover {
+.game-body .game-board .deck .play-keep-btn .keep-btn:hover {
   transform: scale(1.5);
   border: 2px solid;
   border-radius: 50%;
   background-color: rgb(15, 149, 66);
   z-index: 25;
 }
-body .game-board .deck .player-left {
+.game-body .game-board .deck .player-left {
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -328,54 +328,54 @@ body .game-board .deck .player-left {
   right: 10rem;
   justify-content: center;
 }
-body .game-board .deck .player-left .card {
+.game-body .game-board .deck .player-left .card {
   transform: rotate(90deg);
 }
-body .game-board .deck .player-left .card .card-front {
+.game-body .game-board .deck .player-left .card .card-front {
   transform: rotateY(180deg);
 }
-body .game-board .deck .player-right {
+.game-body .game-board .deck .player-right {
   display: flex;
   flex-direction: column;
   position: absolute;
   left: 10rem;
   justify-content: center;
 }
-body .game-board .deck .player-right .card {
+.game-body .game-board .deck .player-right .card {
   transform: rotate(-90deg);
 }
-body .game-board .deck .player-right .card .card-front {
+.game-body .game-board .deck .player-right .card .card-front {
   transform: rotateY(180deg);
 }
-body .game-board .deck .player-top {
+.game-body .game-board .deck .player-top {
   display: flex;
   position: absolute;
-  top: 1rem;
+  bottom: 18rem;
   justify-content: center;
 }
-body .game-board .deck .player-top .card .card-front {
+.game-body .game-board .deck .player-top .card .card-front {
   transform: rotateY(180deg);
 }
-body .game-board .deck .player-bot {
+.game-body .game-board .deck .player-bot {
   display: flex;
   position: absolute;
   top: 0;
   justify-content: center;
 }
-body .game-board .deck .player-bot .card {
+.game-body .game-board .deck .player-bot .card {
   cursor: pointer;
   transition: all 0.5s;
 }
-body .game-board .deck .player-bot .card:hover {
+.game-body .game-board .deck .player-bot .card:hover {
   transform: translateY(-4rem);
 }
-body .game-board .deck .player-bot .card .card-back {
+.game-body .game-board .deck .player-bot .card .card-back {
   transform: rotateY(180deg);
 }
-body .game-board .deck .player-bot .card .card-highlighted:hover {
+.game-body .game-board .deck .player-bot .card .card-highlighted:hover {
   animation: highlighted 1s ease-in-out alternate infinite;
 }
-body .game-board .deck .discard-pile {
+.game-body .game-board .deck .discard-pile {
   width: 33vw;
   height: 33vh;
   display: flex;
@@ -384,19 +384,19 @@ body .game-board .deck .discard-pile {
   justify-content: center;
   align-items: center;
 }
-body .game-board .deck .discard-pile .card-style {
+.game-body .game-board .deck .discard-pile .card-style {
   position: relative;
 }
-body .game-board .deck .discard-pile .card-style .card {
+.game-body .game-board .deck .discard-pile .card-style .card {
   display: flex;
   position: absolute;
   justify-content: center;
   align-items: center;
 }
-body .game-board .deck .discard-pile .card-style .card .card-back {
+.game-body .game-board .deck .discard-pile .card-style .card .card-back {
   transform: rotateY(180deg);
 }
-body .game-board .deck .clockwise {
+.game-body .game-board .deck .clockwise {
   left: calc(50% - 15rem);
   top: calc(-4rem + 50% - 15rem);
   position: absolute;
@@ -413,7 +413,7 @@ body .game-board .deck .clockwise {
   background-repeat: no-repeat;
   animation: clockwise-arrow 20s linear infinite;
 }
-body .game-board .deck .counter-clockwise {
+.game-body .game-board .deck .counter-clockwise {
   left: calc(50% - 15rem);
   top: calc(-4rem + 50% - 15rem);
   position: absolute;
@@ -430,52 +430,52 @@ body .game-board .deck .counter-clockwise {
   background-repeat: no-repeat;
   animation: counter-clockwise-arrow 20s linear infinite;
 }
-body .game-board .deck .main-deck {
+.game-body .game-board .deck .main-deck {
   display: flex;
   position: absolute;
   transform: rotateX(60deg) rotateZ(-45deg);
   transform-style: preserve-3d;
 }
-body .game-board .deck .main-deck div.top-card {
+.game-body .game-board .deck .main-deck div.top-card {
   z-index: 1;
   cursor: pointer;
   transition: transform 0.5s;
 }
-body .game-board .deck .main-deck div.top-card:hover {
+.game-body .game-board .deck .main-deck div.top-card:hover {
   transform: translate(1rem, 3rem);
 }
-body .game-board .deck .p1 {
+.game-body .game-board .deck .p1 {
   position: absolute;
   top: 0;
   left: -3rem;
   display: flex;
   align-items: center;
 }
-body .game-board .deck .p2 {
+.game-body .game-board .deck .p2 {
   position: absolute;
   top: -3rem;
-  left: 10rem;
+  right: 25rem;
   display: flex;
   align-items: center;
 }
-body .game-board .deck .p3 {
+.game-body .game-board .deck .p3 {
   position: absolute;
-  top: 1rem;
+  bottom: 8rem;
   left: -3rem;
   display: flex;
   align-items: center;
 }
-body .game-board .deck .p4 {
+.game-body .game-board .deck .p4 {
   position: absolute;
   bottom: 0;
-  right: 10rem;
+  left: 25rem;
   display: flex;
   align-items: center;
 }
-body .game-board .deck .highlighted {
+.game-body .game-board .deck .highlighted {
   box-shadow: 0 0 1.5rem 1rem rgb(244, 252, 88);
 }
-body .game-board .deck .profile {
+.game-body .game-board .deck .profile {
   font-size: large;
   font-weight: bold;
   font-family: "Times New Roman", Times, serif;
@@ -496,18 +496,18 @@ body .game-board .deck .profile {
   box-sizing: content-box;
   z-index: 30;
 }
-body .game-board .deck .profile img {
+.game-body .game-board .deck .profile img {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-body .game-board .deck .profile img:nth-child(1) {
+.game-body .game-board .deck .profile img:nth-child(1) {
   width: 7rem;
   margin: 1rem 0;
   text-align: center;
 }
-body .game-board .deck .profile img:nth-child(2) {
+.game-body .game-board .deck .profile img:nth-child(2) {
   display: flex;
   justify-content: center;
   margin: 0 1rem 1rem 1rem;
@@ -517,7 +517,7 @@ body .game-board .deck .profile img:nth-child(2) {
   background-repeat: no-repeat;
   background-position: center;
 }
-body .game-board .setting {
+.game-body .game-board .setting {
   cursor: pointer;
   position: absolute;
   width: 3rem;
@@ -531,10 +531,10 @@ body .game-board .setting {
   border-radius: 50%;
   border: 0.3rem solid brown;
 }
-body .game-board .setting:hover {
+.game-body .game-board .setting:hover {
   animation: rotate-360 5s linear infinite;
 }
-body .game-board .warning {
+.game-body .game-board .warning {
   display: flex;
   position: absolute;
   top: 6rem;
@@ -549,7 +549,7 @@ body .game-board .warning {
   justify-content: center;
   align-items: center;
 }
-body .game-board .music {
+.game-body .game-board .music {
   cursor: pointer;
   position: absolute;
   width: 3rem;
@@ -563,10 +563,10 @@ body .game-board .music {
   border-radius: 50%;
   border: 0.3rem solid brown;
 }
-body .game-board .music:hover {
+.game-body .game-board .music:hover {
   animation: shake 0.8s linear infinite;
 }
-body .game-board .card-front {
+.game-body .game-board .card-front {
   position: absolute;
   width: var(--card-width);
   height: var(--card-height);
@@ -583,7 +583,7 @@ body .game-board .card-front {
   border-radius: 0.5rem;
   box-shadow: 0.2rem 0.2rem 0.3rem 0rem #000000;
 }
-body .game-board .card-back {
+.game-body .game-board .card-back {
   position: absolute;
   width: var(--card-width);
   height: var(--card-height);
@@ -597,6 +597,14 @@ body .game-board .card-back {
   border-color: var(--card-border-color);
   border-radius: 0.5rem;
   box-shadow: 0.2rem 0.2rem 0.3rem 0rem #000000;
+}
+
+input[type=range] {
+  position: absolute;
+  right: 4rem;
+  top: 6rem;
+  margin: 0px 0;
+  width: 50px;
 }
 
 @keyframes clockwise-arrow {

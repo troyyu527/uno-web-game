@@ -24,16 +24,13 @@ import AuthService from '@utils/services/auth.service';
 
 //import {start} from '../public/src/main'
 function Game(){
-  const turnDuration= 1000;
   const initialHits = 7;
   const router = useRouter();
   const initHitCardTime = 200;
   const playCardTime = 1000;
   //state varies
   const [isPause,setIsPause] = useState(false)
-  const [isGame, setIsGame] = useState(false)
-  const [isSetting, setIsSetting] = useState(false)
-  const [showInput, setShowInput] = useState(false);
+  const [isGame, setIsGame] = useState(false);
   const [currentUser, setCurrentUser] = useState(AuthService.getCurrentUser())
   const [showColActPen,setColActPen] = useState([false,false,false])
   const [isReverse,setIsReverse] = useState(false);
@@ -41,15 +38,16 @@ function Game(){
   const [isBGM,setIsBGM] = useState(true)
   const [isGameOver,setIsGameOver] = useState(false)
   const [showData, setShowData] = useState(false);
+  const [showMenuData, setShowMenuData] = useState(false);
   const [showCard, setShowCard] = useState(false);
 
   
   const delay = ms => new Promise(res => setTimeout(res, ms));
-  let user = currentUser?currentUser.data:"Player"
+  let user = currentUser?currentUser.user:"Player"
   let winner = null
   
   
-  const [gameData, setGameData] = useState([]);
+  const [gameData, setGameData] = useState([{},{},{},{}]);
 
   //initial profiles
   let playerQueue = [user,"AI-1","AI-2","AI-3"];
@@ -164,6 +162,19 @@ function Game(){
     }
   }
   //
+  useEffect(()=>{
+    AuthService.getGameData(user)
+    .then(res=>{
+      let sortGameData = [{},{},{},{}]
+      res.data.forEach((obj,i)=>{
+        sortGameData[obj.index]=obj
+      })
+      setGameData(sortGameData)
+    })
+    .catch(()=>{
+      setGameData([{},{},{},{}])
+    })
+  },[])
   useEffect(() => {
     // This code will execute whenever currentPlayer changes
     //console.log("Current player changed:", currentPlayer);
@@ -187,7 +198,8 @@ function Game(){
   const startGame = async () =>{
     setIsGame(true)
     winner = null
-    if(currentUser) user = currentUser.user
+    // if(currentUser) user = currentUser.user
+    // console.log(user)
     mainDeck.shuffle();
 	  //Deal cards to each player
     await delay(500)
@@ -250,7 +262,7 @@ function Game(){
   }
   function getCurrentData(){
     let data = {
-      user:currentUser.data,
+      user:user,
       date:new Date().getTime(),
       currentPlayer:currentPlayer,
       currentPlayerQueue:currentPlayerQueue,
@@ -282,17 +294,11 @@ function Game(){
     setCurrentPlayer(selector)
   }
   function loadGame(){
-    AuthService.getGameData(user)
-    .then(res=>{
-      setGameData(res.data)
-      setShowData(!showData)
-    })
+    setShowMenuData(true)
   }
   function loadData(index,dirToGame){
-    if(gameData[index]){
-      let selectIndex
-      gameData.forEach((obj,i)=>{if(obj.index===index) selectIndex=i})
-      let data = gameData[selectIndex]
+    if(gameData[index].index){
+      let data = gameData[index]
       let [p1cards,p2cards,p3cards,p4cards,maincards,discardcards] =[[],[],[],[],[],[]]
       data.p1.forEach(e =>p1cards.push(new Card(e.suit,e.value,e.points,e.wildColor,e.hasPenalty)));
       data.p2.forEach(e =>p2cards.push(new Card(e.suit,e.value,e.points,e.wildColor,e.hasPenalty)));
@@ -316,11 +322,13 @@ function Game(){
       //   discardChildElements[i].style.visibility = "visible";
       // }
       setShowCard(true)
-      setShowData(!showData)
+      
       if(dirToGame){
         setIsGame(true)
+        setShowMenuData(false)
       }else{
         setIsPause(false)
+        setShowData(false)
       }
       // const cardStyle = document.querySelectorAll(".card-style");
       // cardStyle.forEach(card => {
@@ -351,11 +359,11 @@ function Game(){
     return false 
   }
   return (
-  <>
+  <div className="game-body">
     {isGameOver && 
       <GameOver winner={currentWinner} backHome={backHome} startGame={startGame} setIsGameOver={setIsGameOver}/>
     }
-    {!isGame && !isGameOver && !showData &&
+    {!isGame && !isGameOver && !showData && !showMenuData &&
       <div className="model-menu">
         <div className="model-content-menu">
           <div className="bar-btn" onClick={startGame}>Start</div>
@@ -364,13 +372,12 @@ function Game(){
         </div>
       </div>
     }
-    {showData && (
+    {showMenuData && (
       <div className="model-setting">
         <DataPage 
         title="Load" 
-        toggleDataPage={loadGame} 
         showData={showData}
-        setShowData={setShowData}
+        setShowData={setShowMenuData}
         dirToGame={true}
         loadData={loadData}
         gameData={gameData}
@@ -625,7 +632,7 @@ function Game(){
     <audio ref={audio4}/>
     <audio ref={audio5}/>
     <audio ref={audio6}/>
-  </>
+  </div>
   )
 }
   

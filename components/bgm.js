@@ -25,7 +25,7 @@ function BGM(props) {
   };
   return (
     <>
-      <audio ref={audioRef} id="bgm" loop src="/audio/a-small-miracle.mp3" type="audio/mpeg" />
+      <audio ref={audioRef} id="bgm" loop src="./audio/a-small-miracle.mp3" type="audio/mpeg" />
       <div className="music" onClick={toggleInput}/>
       {showInput && 
         <input

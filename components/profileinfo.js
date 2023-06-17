@@ -10,7 +10,7 @@ function ProfileInfo(props) {
     <div className={`profile ${pos} ${isUserTurn?"highlighted":""}`}>
       <div>{name}</div>
       <Image
-          src={`/img/avatar_photo/avatar_${pixIndex}.svg`}
+          src={`./img/avatar_photo/avatar_${pixIndex}.svg`}
           alt="Avatar Photo"
           width={30}
           height={30}

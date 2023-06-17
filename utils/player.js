@@ -1,4 +1,4 @@
-import {Deck,Card} from './deck.js'
+import {Deck,Card} from '@utils/deck'
 
 export class Player extends Deck{
   constructor(name="NPC",selector,cards){

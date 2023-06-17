@@ -10,6 +10,7 @@ function Profile() {
   const [email, setEmail] = useState(currentUser?.email||"");
   const [password, setPassword] = useState(currentUser?.password||"");
   const [gender, setGender] = useState(currentUser?.gender||"");
+  const [gameData,setGameData] =useState("0");
   const [isModify,setIsModify] = useState(false)
   const [message, setMessage] = useState('');
   
@@ -70,10 +71,25 @@ function Profile() {
   const handleChangeGender = (e) => {
     setGender(e.target.value);
   };
+  const handleClearData = ()=>{
+    if(Number(gameData)===0) return
+    AuthService.deleteGameDataAll(user)
+    .then(()=>{
+      setGameData("0")
+    })
+  }
   useEffect(()=>{
     if(!currentUser) backHome()
   },[currentUser])
- 
+  useEffect(()=>{
+    AuthService.getGameData(user)
+    .then(res=>{
+      setGameData(""+res.data.length)
+    })
+    .catch(()=>{
+      setGameData("0")
+    })
+  },[])
   return (
     <>
       <div className='form-body'>
@@ -93,10 +109,12 @@ function Profile() {
                     <p>Password: (Hidden)</p>
                     <p>Gender: {gender}</p>
                     <p>Role: {currentUser?.role||"Member"}</p>
+                    <p>Saved Game File: {gameData}</p>
                   </div>
                   <div className='btn-container'>
                     <div className='btn-form' onClick={handleModify}>Modify</div>
-                    <div className='btn-form'onClick={handleDelete}>Delete</div>
+                    <div className='btn-form' onClick={handleClearData}>Clear Game Data</div>
+                    <div className='btn-form'onClick={handleDelete}>Delete Account</div>
                   </div>
                 </div>
               }

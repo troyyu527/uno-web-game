@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: theme("fontFamily.display");
+  color: #f1f5f9;
+  background:
+    radial-gradient(1100px 600px at 12% -10%, rgba(99, 102, 241, 0.18), transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, rgba(228, 52, 47, 0.14), transparent 55%),
+    linear-gradient(180deg, #0f172a 0%, #070b16 100%);
+  background-attachment: fixed;
+}
+
+/* ---- 3D table scene -------------------------------------------------------
+   A wooden-framed green felt table, tilted back in perspective so it recedes
+   toward the top of the screen. Cards and piles sit on top in screen space so
+   they stay readable and clickable. */
+.scene {
+  perspective: 1700px;
+}
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+.table-wood {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: min(99vw, 1660px);
+  height: 92vh;
+  transform: translate(-50%, -50%) rotateX(15deg);
+  transform-style: preserve-3d;
+  border-radius: 26% / 40%;
+  padding: 1.3rem;
+  background: linear-gradient(160deg, #7a5230 0%, #4a3018 55%, #35230f 100%);
+  box-shadow: 0 50px 120px rgba(0, 0, 0, 0.65);
+}
+.felt {
+  position: absolute;
+  inset: 1.3rem;
+  border-radius: 24% / 38%;
+  background: radial-gradient(ellipse at 50% 42%, #2c9560 0%, #166a41 55%, #0d3f28 100%);
+  box-shadow:
+    inset 0 0 110px rgba(0, 0, 0, 0.5),
+    inset 0 0 0 3px rgba(255, 255, 255, 0.05);
+}
+
+/* Draw-deck peel: the top card lifts and tips up on hover, like a hand about
+   to pick it off the pile. --z carries the card's stack height so the peel
+   stays above the layers below it. */
+/* Base transform lives here (not inline) so the :hover rule can override it —
+   an inline transform would win over the class and kill the hover. */
+.deck-peel {
+  transform: translateZ(var(--z));
+  transform-origin: 50% 90%;
+  transition: transform 0.25s ease;
+}
+/* Lifts the top card off the pile and slides it toward the player (screen
+   lower-right), like a hand drawing it. The deck is rotated rotateZ(-42deg),
+   so a local +Y move reads as down-and-right on screen. */
+.deck-btn:hover .deck-peel {
+  transform: translateZ(calc(var(--z) + 46px)) translate(0.2rem, 2rem) rotate(10deg);
+}
+.deck-peel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0);
+  transition: box-shadow 0.25s ease;
+}
+.deck-btn:hover .deck-peel::after {
+  box-shadow: 0 1.3rem 1.5rem rgba(0, 0, 0, 0.45);
+}
+
+/* The golden burst behind an action card (Skip / +2 / Reverse / +4). */
+@keyframes action-pop {
+  0% { transform: translate(-50%, -50%) scale(0.4); opacity: 0; }
+  25% { opacity: 1; }
+  70% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1.15); opacity: 0; }
+}

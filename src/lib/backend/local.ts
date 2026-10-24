@@ -2,7 +2,7 @@ import { type Backend, type SaveSlot, type User, BackendError } from "./types";
 
 // localStorage-backed auth + saves. Passwords are SHA-256 hashed. This is a
 // convenience/offline store, NOT a security boundary — data lives in the
-// browser and is per-device. The Supabase adapter is the real backend.
+// browser and is per-device. The Cloudflare adapter is the real backend.
 
 const USERS_KEY = "uno.users";
 const SESSION_KEY = "uno.session";

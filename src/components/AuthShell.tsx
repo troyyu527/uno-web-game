@@ -15,7 +15,7 @@ export function AuthShell({ title, children }: { title: string; children: React.
         </Link>
         <h1 className="mb-1 text-2xl font-extrabold text-slate-50">{title}</h1>
         <p className="mb-6 text-xs text-slate-500">
-          {backendKind === "supabase" ? "Connected to Supabase" : "Stored locally in your browser"}
+          {backendKind === "cloudflare" ? "Connected to the cloud server" : "Stored locally in your browser"}
         </p>
         {children}
       </motion.div>

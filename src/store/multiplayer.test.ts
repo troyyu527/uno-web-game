@@ -18,7 +18,7 @@ const cardCount = (s: MultiState) =>
 /**
  * A second client: its own store instance is impractical here (the store is a
  * module singleton), so a "peer" is modelled as the state a client would hold
- * after hydrating — round-tripping through the wire format the way Supabase
+ * after hydrating — round-tripping through the wire format the way the server
  * does, JSON included.
  */
 const overWire = (s: MultiState): MultiState => JSON.parse(JSON.stringify(s));

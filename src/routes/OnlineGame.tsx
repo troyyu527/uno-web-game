@@ -15,7 +15,7 @@ interface Props {
   code: string;
   room: Room;
   user: User;
-  /** User ids currently connected to the room (Supabase presence). */
+  /** User ids currently connected to the room (live socket presence). */
   online: Set<string>;
   /** Report a room we wrote ourselves, so it applies without a round trip. */
   onRoomChange: (room: Room) => void;
@@ -51,7 +51,7 @@ export default function OnlineGame({ code, room, user, online, onRoomChange, onL
       setClaiming(seat);
       setClaimError(null);
       try {
-        onRoomChange(await claimSeat(user, code, seat));
+        onRoomChange(await claimSeat(code, seat));
       } catch (e) {
         setClaimError(e instanceof Error ? e.message : "Could not take that seat.");
         setClaiming(null);

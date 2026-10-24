@@ -15,11 +15,11 @@ export interface SaveSlot {
 
 /**
  * Everything the app needs from a backend. Two adapters implement it — a
- * localStorage one (always available) and a Supabase one (used when the
- * VITE_SUPABASE_* env vars are set). The app only ever talks to this interface.
+ * localStorage one (always available) and a Cloudflare Worker one (used when
+ * VITE_API_URL is set). The app only ever talks to this interface.
  */
 export interface Backend {
-  readonly kind: "local" | "supabase";
+  readonly kind: "local" | "cloudflare";
 
   /** Restore an existing session, if any. */
   init(): Promise<User | null>;
@@ -35,8 +35,8 @@ export interface Backend {
 export class BackendError extends Error {}
 
 /**
- * The operation succeeded but can't finish here — e.g. Supabase created the
- * account and is waiting on an emailed confirmation. It travels the same path
+ * The operation succeeded but can't finish here — e.g. the account was created
+ * but is waiting on an emailed confirmation. It travels the same path
  * as an error because it interrupts the flow, but it is good news and must not
  * be shown as a failure.
  */

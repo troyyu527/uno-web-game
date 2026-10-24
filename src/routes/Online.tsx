@@ -34,7 +34,7 @@ export default function Online() {
     setBusy("create");
     setError(null);
     try {
-      const room = await createRoom(user);
+      const room = await createRoom();
       navigate(`/room/${room.code}`);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Could not create a room.");
@@ -51,7 +51,7 @@ export default function Online() {
     setBusy("join");
     setError(null);
     try {
-      await joinRoom(user, code);
+      await joinRoom(code);
       navigate(`/room/${code}`);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Could not join that room.");

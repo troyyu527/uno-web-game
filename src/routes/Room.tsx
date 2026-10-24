@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/store/authStore";
@@ -6,31 +6,14 @@ import { useGame } from "@/store/gameStore";
 import OnlineGame from "./OnlineGame";
 import {
   buildSeats,
-  getRoom,
   joinRoom,
   leaveRoom,
   startGame,
-  subscribePresence,
   subscribeRoom,
   type Room as RoomT,
 } from "@/lib/rooms";
 
 const NO_ONE: Set<string> = new Set();
-/** How often to re-read the room when Realtime hasn't told us anything. */
-const POLL_MS = 3000;
-
-/**
- * Cheap equality so a poll that found nothing new doesn't re-render the table.
- * `seats` has to be in here: claiming or releasing a seat rewrites it without
- * touching `version`, and treating that as "nothing new" would strand the
- * change whenever Realtime isn't delivering.
- */
-const unchanged = (a: RoomT | null, b: RoomT) =>
-  !!a &&
-  a.version === b.version &&
-  a.status === b.status &&
-  JSON.stringify(a.players) === JSON.stringify(b.players) &&
-  JSON.stringify(a.seats) === JSON.stringify(b.seats);
 
 export default function Room() {
   const { code = "" } = useParams();
@@ -40,9 +23,6 @@ export default function Room() {
   const [online, setOnline] = useState(NO_ONE);
   const [error, setError] = useState<string | null>(null);
   const [starting, setStarting] = useState(false);
-  const rejoins = useRef(0);
-  /** When Realtime last delivered, so the fallback poll can stand down. */
-  const liveAt = useRef(0);
 
   useEffect(() => {
     if (!user) {
@@ -52,59 +32,37 @@ export default function Room() {
     let alive = true;
     (async () => {
       try {
-        const r = await joinRoom(user, code); // idempotent — also handles refresh/direct nav
+        const r = await joinRoom(code); // idempotent — also handles refresh/direct nav
         if (alive) setRoom(r);
       } catch (e) {
         if (alive) setError(e instanceof Error ? e.message : "Could not open that room.");
       }
     })();
-    const unsub = subscribeRoom(code, (r) => {
-      if (!alive) return;
-      liveAt.current = Date.now();
-      if (!r) {
-        setError("The host closed this room.");
-        setRoom(null);
-      } else {
-        setRoom(r);
-      }
+    // The socket delivers every change to the room plus who's connected, and
+    // resends the whole room whenever it reconnects — so a dropped connection
+    // or a sleeping tab catches up without polling.
+    const unsub = subscribeRoom(code, {
+      room: (r) => {
+        if (!alive) return;
+        if (!r) {
+          setError("The host closed this room.");
+          setRoom(null);
+        } else {
+          setRoom(r);
+        }
+      },
+      presence: (ids) => {
+        if (alive) setOnline(ids);
+      },
+      error: (message) => {
+        if (alive) setError(message);
+      },
     });
-    const unsubPresence = subscribePresence(code, user.id, (ids) => {
-      if (alive) setOnline(ids);
-    });
-    // Safety net: Realtime is the fast path, but a dropped message (or a
-    // project where Realtime was never enabled on the table) would otherwise
-    // leave the table frozen. Re-reading the room is one small row, and states
-    // no newer than what we hold are ignored downstream.
-    const poll = setInterval(() => {
-      if (!alive) return;
-      // Realtime is doing its job — don't spend a read confirming it.
-      if (Date.now() - liveAt.current < POLL_MS * 3) return;
-      void getRoom(code).then((r) => {
-        // A missing room is left to the Realtime DELETE, so that a single failed
-        // read can't wrongly tell everyone the host closed the room.
-        if (alive && r) setRoom((prev) => (unchanged(prev, r) ? prev : r));
-      }, () => {});
-    }, POLL_MS);
     return () => {
       alive = false;
-      clearInterval(poll);
       unsub();
-      unsubPresence();
     };
   }, [code, user, navigate]);
-
-  // Joining is a read-modify-write, so two people arriving at once can drop one
-  // of them from the list. If the room says we're not in it, put ourselves back.
-  useEffect(() => {
-    if (!user || !room || room.status !== "lobby") return;
-    if (room.players.some((p) => p.userId === user.id)) {
-      rejoins.current = 0;
-      return;
-    }
-    if (rejoins.current >= 3) return;
-    rejoins.current += 1;
-    joinRoom(user, code).then(setRoom, () => {});
-  }, [room, user, code]);
 
   const isHost = !!user && room?.hostId === user.id;
   const canStart = isHost && (room?.players.length ?? 0) >= 2;
@@ -118,7 +76,7 @@ export default function Room() {
       const seats = buildSeats(room.players);
       useGame.getState().startMultiplayer(seats);
       // Apply the started room directly — the host shouldn't sit on the lobby
-      // waiting for its own write to travel back over Realtime.
+      // waiting for its own write to travel back over the socket.
       setRoom(await startGame(code, seats, useGame.getState().getMultiState()));
     } catch (e) {
       setError(e instanceof Error ? e.message : "Could not start the game.");
@@ -127,7 +85,7 @@ export default function Room() {
   };
 
   const onLeave = async () => {
-    if (user) await leaveRoom(user, code).catch(() => {});
+    if (user) await leaveRoom(code).catch(() => {});
     useGame.getState().toMenu();
     navigate("/online");
   };

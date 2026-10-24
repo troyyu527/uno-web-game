@@ -1,12 +1,12 @@
 import { localBackend } from "./local";
-import { supabaseBackend, hasSupabase } from "./supabase";
+import { cloudflareBackend, hasCloudflare } from "./cloudflare";
 import type { Backend, SaveSlot, User } from "./types";
 
 export type { User, SaveSlot, Backend } from "./types";
 export { BackendError, BackendNotice } from "./types";
 
-/** Supabase when configured (VITE_SUPABASE_*), else localStorage. */
-export const backend: Backend = hasSupabase ? supabaseBackend : localBackend;
+/** The Cloudflare Worker when configured (VITE_API_URL), else localStorage. */
+export const backend: Backend = hasCloudflare ? cloudflareBackend : localBackend;
 export const backendKind = backend.kind;
 
 /** A pseudo-user so guests can still save/load locally (always via localStorage). */

@@ -1,17 +1,12 @@
 import { create } from "zustand";
-import { supabase } from "@/lib/backend/supabase";
+import { api, ApiError, API_URL } from "@/lib/api";
 
 export type ServerStatus = "checking" | "online" | "offline" | "unconfigured";
 
 /** How long to wait for the server before calling it unreachable. */
 const TIMEOUT_MS = 6000;
 
-/**
- * "That table isn't there." PostgREST answers from its schema cache
- * (PGRST205); 42P01 is Postgres' own undefined_table, in case the request ever
- * gets far enough to hit it.
- */
-const MISSING_TABLE = new Set(["PGRST205", "42P01"]);
+const UNCONFIGURED = "Online play needs the server URL (VITE_API_URL) in .env.";
 
 interface ServerStore {
   status: ServerStatus;
@@ -22,17 +17,17 @@ interface ServerStore {
 
 /**
  * Whether the multiplayer backend is actually reachable — which is a different
- * question from whether it's configured. The probe reads the rooms table, so a
- * pass means the server answered *and* the multiplayer schema is really there;
- * a project that was never migrated fails here rather than at "Create a room".
+ * question from whether it's configured. The Worker's /health reads the
+ * database, so a pass means the server answered *and* its schema is really
+ * there; a database that was never migrated fails here rather than at sign-up.
  */
 export const useServer = create<ServerStore>((set) => ({
-  status: supabase ? "checking" : "unconfigured",
-  detail: supabase ? "Checking the server…" : "Online play needs Supabase keys in .env.",
+  status: API_URL ? "checking" : "unconfigured",
+  detail: API_URL ? "Checking the server…" : UNCONFIGURED,
 
   check: async () => {
-    if (!supabase) {
-      set({ status: "unconfigured", detail: "Online play needs Supabase keys in .env." });
+    if (!API_URL) {
+      set({ status: "unconfigured", detail: UNCONFIGURED });
       return;
     }
     set({ status: "checking", detail: "Checking the server…" });
@@ -40,27 +35,21 @@ export const useServer = create<ServerStore>((set) => ({
     const abort = new AbortController();
     const timer = setTimeout(() => abort.abort(), TIMEOUT_MS);
     try {
-      // Anonymous readers see no rows through RLS, so an empty result is the
-      // success case — we only care that the request completed.
-      const { error } = await supabase
-        .from("rooms")
-        .select("code")
-        .limit(1)
-        .abortSignal(abort.signal);
-
-      if (!error) {
-        set({ status: "online", detail: "Connected — online play is available." });
-      } else if (MISSING_TABLE.has(error.code)) {
-        // Reached the server, but this project was never migrated.
+      await api("/health", { signal: abort.signal });
+      set({ status: "online", detail: "Connected — online play is available." });
+    } catch (e) {
+      const status = e instanceof ApiError ? e.status : 0;
+      if (status === 0) {
+        set({ status: "offline", detail: "Can't reach the server — check your connection." });
+      } else if (e instanceof ApiError && /not migrated/i.test(e.message)) {
+        // Reached the server, but its database was never set up.
         set({
           status: "offline",
-          detail: "Server is up, but the rooms table is missing — run docs/supabase-rooms.sql.",
+          detail: "Server is up, but its database is missing tables — run `npm run db:migrate`.",
         });
       } else {
-        set({ status: "offline", detail: `Server rejected the check: ${error.message}` });
+        set({ status: "offline", detail: `Server rejected the check: ${(e as Error).message}` });
       }
-    } catch {
-      set({ status: "offline", detail: "Can't reach the server — check your connection." });
     } finally {
       clearTimeout(timer);
     }

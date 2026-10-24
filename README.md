@@ -18,7 +18,6 @@ against three AI opponents, or online with friends in a shared room joined by a
 | State | **Zustand** — the game modelled as turn phases |
 | Styling | **Tailwind CSS** |
 | Animation | **Framer Motion** (`layout`, `AnimatePresence`) |
-| Testing | **Vitest** — 66 unit tests, including fully simulated games |
 | Backend *(optional)* | **Cloudflare Workers** — D1 (SQLite), Durable Objects, WebSockets |
 | Deploy | GitHub Pages (static `dist/`) |
 
@@ -37,7 +36,6 @@ Other scripts:
 ```bash
 npm run build    # typecheck + production build to dist/
 npm run preview  # serve the production build
-npm run test     # run the engine + store unit tests (Vitest)
 ```
 
 > If `npm run dev` reports a port other than 5173, an earlier dev server is still
@@ -46,10 +44,10 @@ npm run test     # run the engine + store unit tests (Vitest)
 
 ## How it's built
 
-The game is split into a **pure, tested core** and a **thin UI**:
+The game is split into a **pure core** and a **thin UI**:
 
 - `src/game/` — the UNO engine as plain, immutable TypeScript: `deck`, `rules`,
-  `ai`, `types`. No React, no DOM. Covered by unit tests.
+  `ai`, `types`. No React, no DOM.
 
   It follows the official Mattel rules, including two that casual
   implementations usually drop: the **opening flip acts on the first player**
